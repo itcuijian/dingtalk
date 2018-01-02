@@ -1,0 +1,21 @@
+{
+	"name": "itcuijian/dingtalk",
+	"type": "library",
+	"description": "This package provides the dingtalk open api",
+	"keyword": ["dingtalk"],
+	"license": "MIT",
+	"author": [
+		{
+			"name": "Cuijian",
+			"email": "itcuijian@gmail.com"
+		}
+	],
+    "require": {
+        "nategood/httpful": "*"
+    },
+    "autoload": {
+    	"psr-4": {
+    		"Itcuijian\\DingTalk\\": ""
+    	}
+    }
+}
