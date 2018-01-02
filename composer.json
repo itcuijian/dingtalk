@@ -4,6 +4,7 @@
 	"description": "This package provides the dingtalk open api",
 	"keyword": ["dingtalk"],
 	"license": "MIT",
+	"version": "1.0.0",
 	"author": [
 		{
 			"name": "Cuijian",
