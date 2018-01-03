@@ -7,8 +7,13 @@ $corpid = '';
 $secret = '';
 $agentid = '';
 
-$auth = new Auth($corpid, $secret, $agentid);
-// $auth->setCacheRoot('/');
-// $auth->setLogRoot('/');
+//获取accessToken
+$accessToken = Auth::getAccessToken($corpid, $secret);
 
-var_dump($auth->getConfig());
+//获取jsTicket
+$ticket = Auth::getTicket($accessToken);
+
+//获取config
+$config = Auth::getConfig($corpid, $agentid, $accessToken, $ticket);
+
+$config = json_encode($config, JSON_UNESCAPED_SLASHES);

@@ -6,6 +6,9 @@ use Itcuijian\DingTalk\Util\Http;
 
 class Auth
 {
+    /**
+      * 缓存accessToken。accessToken有效期为两小时，需要在失效前请求新的accessToken（注意：以下代码没有缓存accessToken）。
+      */
     public function static getAccessToken($corpid, $secret)
     {
         $response = Http::get('/gettoken', array('corpid' => $corpid, 'corpsecret' => $secret));
@@ -15,7 +18,7 @@ class Auth
     }
     
      /**
-      * 缓存jsTicket。jsTicket有效期为两小时，需要在失效前请求新的jsTicket（注意：以下代码没有在失效前刷新缓存的jsTicket）。
+      * 缓存jsTicket。jsTicket有效期为两小时，需要在失效前请求新的jsTicket（注意：以下代码没有缓存jsTicket）。
       */
     public static function getTicket($accessToken)
     {
@@ -48,24 +51,24 @@ class Auth
         return $pageURL;
     }
 
-    public function getConfig($corpid, $secret, $agentid)
+    public static function getConfig($corpid, $agentid, $accessToken, $ticket)
     {
         $nonceStr = self::str_random(7);
         $timeStamp = time();
         $url = self::curPageURL();
-        $corpAccessToken = self::getAccessToken($corpid, $secret);
+        $corpAccessToken = $accessToken;
 
-        $ticket = self::getTicket($corpAccessToken);
         $signature = self::sign($ticket, $nonceStr, $timeStamp, $url);
         
         $config = array(
             'url' => $url,
             'nonceStr' => $nonceStr,
-            'agentId' => $agentId,
+            'agentId' => $agentid,
             'timeStamp' => $timeStamp,
-            'corpId' => $corpId,
+            'corpId' => $corpid,
             'signature' => $signature);
-        return json_encode($config, JSON_UNESCAPED_SLASHES);
+
+        return $config;
     }
 
     public static function str_random($length = 16)
