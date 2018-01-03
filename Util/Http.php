@@ -12,12 +12,11 @@ Class Http
         $response = \Httpful\Request::get($url)->send();
         if ($response->hasErrors())
         {
-            throw new \Exception("Error: " . json_encode($response), 1);
+            throw new \Exception("Error: " . json_encode($response));
         }
         if ($response->body->errcode != 0)
         {
-            Log::e('Error: ' . json_encode($response->body));
-            throw new \Exception("Error: " . $response->body->errmsg, 1);
+            throw new \Exception("Error: " . $response->body->errmsg);
         }
         return $response->body;
     }
@@ -32,11 +31,11 @@ Class Http
             ->send();
         if ($response->hasErrors())
         {
-            throw new \Exception("Error: " . json_encode($response), 1);
+            throw new \Exception("Error: " . json_encode($response));
         }
         if ($response->body->errcode != 0)
         {
-            throw new \Exception("Error: " . $response->body->errmsg, 1);
+            throw new \Exception("Error: " . $response->body->errmsg);
         }
         return $response->body;
     }

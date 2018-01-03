@@ -3,23 +3,14 @@
 namespace Itcuijian\DingTalk\Api;
 
 use Itcuijian\DingTalk\Util\Http;
-use Itcuijian\DingTalk\Util\Cache;
-use Itcuijian\DingTalk\Util\Log;
 
-class Auth extends Base
+class Auth
 {
-    public function getAccessToken()
+    public function static getAccessToken($corpid, $secret)
     {
-        /**
-         * 缓存accessToken。accessToken有效期为两小时，需要在失效前请求新的accessToken（注意：以下代码没有在失效前刷新缓存的accessToken）。
-         */
-        $accessToken = Cache::get('corp_access_token');
-        if (!$accessToken)
-        {
-            $response = Http::get('/gettoken', array('corpid' => self::$corpid, 'corpsecret' => self::$secret));
-            $accessToken = $response->access_token;
-            Cache::set('corp_access_token', $accessToken);
-        }
+        $response = Http::get('/gettoken', array('corpid' => $corpid, 'corpsecret' => $secret));
+        $accessToken = $response->access_token;
+
         return $accessToken;
     }
     
@@ -28,14 +19,10 @@ class Auth extends Base
       */
     public static function getTicket($accessToken)
     {
-        $jsticket = Cache::getJsTicket('js_ticket');
-        if (!$jsticket)
-        {
-            $response = Http::get('/get_jsapi_ticket', array('type' => 'jsapi', 'access_token' => $accessToken));
-            self::check($response);
-            $jsticket = $response->ticket;
-            Cache::setJsTicket($jsticket);
-        }
+        $response = Http::get('/get_jsapi_ticket', array('type' => 'jsapi', 'access_token' => $accessToken));
+        self::check($response);
+        $jsticket = $response->ticket;
+
         return $jsticket;
     }
 
@@ -61,18 +48,13 @@ class Auth extends Base
         return $pageURL;
     }
 
-    public function getConfig()
+    public function getConfig($corpid, $secret, $agentid)
     {
-        $corpId = self::$corpid;
-        $agentId = self::$agentid;
         $nonceStr = self::str_random(7);
         $timeStamp = time();
         $url = self::curPageURL();
-        $corpAccessToken = $this->getAccessToken();
-        if (!$corpAccessToken)
-        {
-            Log::e("[getConfig] ERR: no corp access token");
-        }
+        $corpAccessToken = self::getAccessToken($corpid, $secret);
+
         $ticket = self::getTicket($corpAccessToken);
         $signature = self::sign($ticket, $nonceStr, $timeStamp, $url);
         
@@ -114,8 +96,7 @@ class Auth extends Base
     {
         if ($res->errcode != 0)
         {
-            Log::e("FAIL: " . json_encode($res));
-            throw new Exception("Error: " . $res->errmsg, 1);
+            throw new Exception("Error: " . $res->errmsg);
         }
     }
 }

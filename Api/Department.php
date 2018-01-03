@@ -3,7 +3,6 @@
 namespace Itcuijian\DingTalk\Api;
 
 use Itcuijian\DingTalk\Util\Http;
-use Itcuijian\DingTalk\Util\Log;
 
 class Department
 {
@@ -20,7 +19,6 @@ class Department
     {
         $response = Http::get("/department/list", 
             array("access_token" => $accessToken));
-        Log::i($accessToken."【--department/list--】".json_encode($response->department));
         return $response->department;
     }
     
