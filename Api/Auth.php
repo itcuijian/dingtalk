@@ -8,7 +8,7 @@ use Itcuijian\DingTalk\Util\Log;
 
 class Auth extends Base
 {
-    public static function getAccessToken()
+    public function getAccessToken()
     {
         /**
          * 缓存accessToken。accessToken有效期为两小时，需要在失效前请求新的accessToken（注意：以下代码没有在失效前刷新缓存的accessToken）。
@@ -68,7 +68,7 @@ class Auth extends Base
         $nonceStr = self::str_random(7);
         $timeStamp = time();
         $url = self::curPageURL();
-        $corpAccessToken = self::getAccessToken();
+        $corpAccessToken = $this->getAccessToken();
         if (!$corpAccessToken)
         {
             Log::e("[getConfig] ERR: no corp access token");
