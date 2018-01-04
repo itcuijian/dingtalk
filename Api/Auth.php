@@ -9,7 +9,7 @@ class Auth
     /**
       * 缓存accessToken。accessToken有效期为两小时，需要在失效前请求新的accessToken（注意：以下代码没有缓存accessToken）。
       */
-    public function static getAccessToken($corpid, $secret)
+    public static function getAccessToken($corpid, $secret)
     {
         $response = Http::get('/gettoken', array('corpid' => $corpid, 'corpsecret' => $secret));
         $accessToken = $response->access_token;
