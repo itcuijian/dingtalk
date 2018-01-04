@@ -22,7 +22,13 @@ class Department
         return $response->department;
     }
     
-    
+    /**
+     * 删除部门
+     * 
+     * @param  string $accessToken
+     * @param  int    $id
+     * @return boolean
+     */
     public static function deleteDept($accessToken, $id)
     {
         $response = Http::get("/department/delete", 

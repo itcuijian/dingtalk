@@ -102,4 +102,20 @@ class Auth
             throw new Exception("Error: " . $res->errmsg);
         }
     }
+
+    /**
+     * 获取CorpSecret授权范围
+     *
+     * @author cuijian
+     *
+     * @param  string $accessToken
+     *
+     * @return mixed 
+     */
+    public function getScopes($accessToken)
+    {
+        $response = Http::get('/auth/scopes', ['access_token' => $accessToken]);
+
+        return $response;
+    }
 }
