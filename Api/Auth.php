@@ -30,7 +30,7 @@ class Auth
     }
 
 
-    function curPageURL()
+    public static function curPageURL()
     {
         $pageURL = 'http';
 
