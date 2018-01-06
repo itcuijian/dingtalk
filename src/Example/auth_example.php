@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../config.php';
 
-use \Itcuijian\DingTalk\Api\Auth;
+use Itcuijian\DingTalk\Api\Auth;
 
 //获取accessToken
 $accessToken = Auth::getAccessToken($corpid, $secret);

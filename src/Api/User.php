@@ -78,7 +78,7 @@ class User
         if (!isset($userInfo['userid']) || !isset($userInfo['name'])) {
             throw new \Exception("The userid and name is required");
         }
-
+        
         $response = Http::post('/user/update', ['access_token' => $accessToken], json_encode($userInfo));
 
         return $response->errcode == 0;

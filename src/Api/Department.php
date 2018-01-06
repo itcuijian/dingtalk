@@ -35,4 +35,23 @@ class Department
             array("access_token" => $accessToken, "id" => $id));
         return $response->errcode == 0;
     }
+
+    /**
+     * 获取部门详情
+     *
+     * @author cuijian
+     *
+     * @param string $accessToken
+     * @param int $id
+     * @param string $lang
+     *
+     * @return mixed 
+     */
+    public static function getDepartmentInfo($accessToken, $id, $lang="zh_CN")
+    {
+        $response = Http::get('/department/get', ['access_token' => $access_token, 'id' => $id, 'lang' => $lang]); 
+
+        return $response;
+    }
+
 }

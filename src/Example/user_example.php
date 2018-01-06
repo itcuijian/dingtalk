@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../config.php';
 
-use \Itcuijian\DingTalk\Api\Auth;
-use \Itcuijian\DingTalk\Api\User;
+use Itcuijian\DingTalk\Api\Auth;
+use Itcuijian\DingTalk\Api\User;
 
 //获取accessToken
 $accessToken = Auth::getAccessToken($corpid, $secret);
@@ -14,11 +14,11 @@ $accessToken = Auth::getAccessToken($corpid, $secret);
 // $list = json_encode($list, JSON_UNESCAPED_SLASHES);
 
 //获取部门用户详情列表
-// $deptId = 1;
-// $list = User::getUserList($accessToken, $deptId);
-// $list = json_encode($list, JSON_UNESCAPED_SLASHES);
+$deptId = 1;
+$list = User::getUserList($accessToken, $deptId);
+$list = json_encode($list, JSON_UNESCAPED_SLASHES);
 
-// echo $list;
+echo $list;
 
 //获取用户详情
 // $userId = 'manager8119';
