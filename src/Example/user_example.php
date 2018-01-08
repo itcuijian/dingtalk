@@ -14,11 +14,11 @@ $accessToken = Auth::getAccessToken($corpid, $secret);
 // $list = json_encode($list, JSON_UNESCAPED_SLASHES);
 
 //获取部门用户详情列表
-$deptId = 1;
-$list = User::getUserList($accessToken, $deptId);
-$list = json_encode($list, JSON_UNESCAPED_SLASHES);
+// $deptId = 1;
+// $list = User::getUserList($accessToken, $deptId);
+// $list = json_encode($list, JSON_UNESCAPED_SLASHES);
 
-echo $list;
+// echo $list;
 
 //获取用户详情
 // $userId = 'manager8119';
@@ -55,3 +55,11 @@ echo $list;
 //根据unionid获取userid
 // $userId = User::getUserIdByUnionId($accessToken, 'fLNiPhpBh5C0iE');
 // echo $userId;
+
+$c = new \DingTalkClient();
+$req = new \CorpExtListRequest;
+$req->setSize("20");
+$req->setOffset("0");
+$resp = $c->execute($req, $accessToken);
+
+print_r($resp);
